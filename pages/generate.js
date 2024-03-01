@@ -69,7 +69,7 @@ import {
       <Center w="100%">
         <Box maxW="xl">
           <FormControl onSubmit={handleSubmit} mt="30px">
-            <Box boxSize="sm" w="500px" h="500px" bg="black">
+            <Box boxSize="sm" w="500px" h="500px" bg="orange.100">
               <Center>
                 {imageData ? (
                   <Image
@@ -77,15 +77,15 @@ import {
                     alt="Generated image"
                   />
                 ) : (
-                  <Image src="https://bit.ly/dan-abramov" alt="Dan Abramov" /> // Placeholder image
+                  <Image mt='80px'src="https://bit.ly/dan-abramov" alt="Dan Abramov" /> // Placeholder image
                 )}
               </Center>
             </Box>
             <FormLabel>Prompt</FormLabel>
             <Input onChange={handleInput} />
             <Center mt='10px'>
-            <Button onClick={handleSubmit} colorScheme="blue">
-              Button
+            <Button onClick={handleSubmit} colorScheme="green">
+              Generate
             </Button>
             </Center>
             {error && <FormHelperText color="red">{error.message}</FormHelperText>}
