@@ -34,8 +34,41 @@ const PromptInput = () => {
   }
   const getPrompt = async (event) => {
       console.log(model)
-      let initprompt = `Generate a prompt to be passed to stable diffusion to generate ad for the following. Include text overlay also.Make it really professional and prodcution ready to be posted on Social Media. The ad should definetly inculude some text and i t should be like a papmlet.Target Audience : ${value} Geographical area : ${geo} Description about the product:${desc} `
-      const data = await model.generateContent(initprompt);
+      const initprompt = `**Generate an eye-catching and engaging social media ad in the style of a professional pamphlet.**
+
+      **Target Audience:** ${value}
+      **Geographical Area:** ${geo}
+    
+      **Product:** ${desc}
+    
+      **Key Benefits:**
+    
+      * Highlight 3-5 compelling benefits using strong verbs and specific details that resonate with the target audience.
+      * Example: "Boost your energy levels naturally" for a fitness product or "Get organized and simplify your life" for a productivity tool.
+    
+      **Call to Action:**
+    
+      * Include a clear and concise call to action (CTA) telling viewers what to do next (e.g., "Learn more", "Shop now", "Visit our website").
+    
+      **Visuals:**
+    
+      * Use keywords to describe desired visuals:
+        * **Background:** (e.g., "Minimalist", "Vibrant colors", "Natural landscape")
+        * **Product:** (e.g., "Close-up", "Lifestyle image", "Action shot")
+        * **Text Overlay:** (e.g., "Easy to read", "Bold font", "Clean layout")
+    
+      **Examples:**
+    
+      * "Show a person using the product in a happy and satisfied way."
+      * "Include a money-back guarantee symbol or other trust signals."
+    
+      **Additional Tips:**
+    
+      * Use elements consistent with your brand, such as logos, colors, or fonts.
+      * Maintain a consistent tone and style that aligns with your brand voice.
+      * Consider adding emotional elements like humor, nostalgia, or inspiration to evoke positive reactions.
+      * Research high-performing social media ads in your industry for inspiration.`;
+          const data = await model.generateContent(initprompt);
       const response = await data.response;
       const text = response.text();
       setPrompt(text)
