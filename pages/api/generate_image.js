@@ -22,6 +22,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
+      console.log
       `${apiHost}/v1/generation/stable-diffusion-v1-6/text-to-image`,
       {
         method: 'POST',
@@ -40,8 +41,6 @@ export default async function handler(req, res) {
         }),
       }
     );
-    console.log("here")
-
 
     if (!response.ok) {
       throw new Error(`Non-200 response: ${await response.text()}`);
