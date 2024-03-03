@@ -17,7 +17,8 @@ import { useState } from "react";
 import axios from "axios";
 import React from 'react'
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+const gemini_key = process.env.NEXT_PUBLIC_GEMINI_API_KEY
+const genAI = new GoogleGenerativeAI(gemini_key);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 
@@ -33,7 +34,7 @@ const PromptInput = () => {
   }
   const getPrompt = async (event) => {
       console.log(model)
-      let initprompt = `Generate a prompt to be passed to stable diffusion to generate ad for the following. Include text overlay also.Make it really professional and prodcution ready to be posted on Social Media.Target Audience : ${value} Geographical area : ${geo} Description about the product:${desc} `
+      let initprompt = `Generate a prompt to be passed to stable diffusion to generate ad for the following. Include text overlay also.Make it really professional and prodcution ready to be posted on Social Media. The ad should definetly inculude some text and i t should be like a papmlet.Target Audience : ${value} Geographical area : ${geo} Description about the product:${desc} `
       const data = await model.generateContent(initprompt);
       const response = await data.response;
       const text = response.text();
