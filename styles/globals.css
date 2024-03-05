@@ -17,9 +17,9 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-image: url(public\Gradient.png);
+  /* color: rgb(var(--foreground-rgb)); */
   background-color: red;
+  
 }
 
 @layer utilities {
