@@ -167,10 +167,10 @@ const PromptInput = () => {
   };
 
   return (
-    <div className="text-black h-[100dvh]">
+    <div className="text-black h-[100dvh] flex flex-col justify-center">
 
       {/* page title */}
-      <h1 className="text-3xl font-bold mt-2 mx-2">ADGen</h1>
+      <h1 className="text-3xl font-bold mt-2 mx-2 absolute top-5 left-5">ADGen</h1>
 
       {/* page content */}
       <div className="grid grid-cols-1 p-10 md:p-2 gap-5 md:grid-cols-2" >
