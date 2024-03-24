@@ -22,17 +22,24 @@ const gemini_key = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 const genAI = new GoogleGenerativeAI(gemini_key);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
+// static files
+import placeHolderImage from "@/public/images/placeHolderImage.png"
 
 
 const PromptInput = () => {
   const [value, setValue] = React.useState('Genz')
   const [geo, setGeo] = React.useState('Urban')
   const [desc, setDesc] = React.useState('')
+
+  const targetGeneration = ["Boomers", "Millennials", "GenZ",]
+  const targetPopulation = ["Urban", "Suburban", "Rural"]
+
   let handleInputChange = (e) => {
     let inputValue = e.target.value
     setDesc(inputValue)
     console.log(desc)
   }
+
   const getPrompt = async (event) => {
     const initprompt = `**Generate an eye-catching and engaging Advertisment in the style of a professional flyer.**
 
@@ -108,6 +115,7 @@ const PromptInput = () => {
     }
 
   }
+
   const engineId = "stable-diffusion-v1-6";
   const apiHost = "https://api.stability.ai";
   const apiKey = process.env.NEXT_PUBLIC_STABILITY_API_KEY; // Replace with your API key
@@ -159,65 +167,84 @@ const PromptInput = () => {
   };
 
   return (
-    <div style={{ background: `linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(170,35,250,1) 65%, rgba(0,212,255,1) 100%)`, height: '1080px' }}>
-     <Center>
-      <Text fontSize='6xl' color={"white"}>💗 Describe your brand 👇</Text>
-      </Center>
-      <HStack >
+    <div className="text-black h-[100dvh] flex flex-col justify-center">
 
-        <Center w="100%">
-          <Box maxW="xl">
-            <FormControl onSubmit={handleSubmit} mt="30px">
-              <Box boxSize="sm" w="500px" h="500px" bg="">
-                <Center>
-                  {imageData ? (
-                    <Image
-                      src={`data:image/jpeg;base64,${imageData}`}  // Update image source
-                      alt="Generated image"
-                    />
-                  ) : (
-                    <Image mt='80px' src="https://64.media.tumblr.com/629f5a812d469ccc381c7ec43253a676/tumblr_n91aktUxmr1qbmm1co1_500.gifv" alt="Dan Abramov" /> // Placeholder image
-                  )}
-                </Center>
-              </Box>
-              {/* <FormLabel>Prompt</FormLabel>
-          <Input onChange={handleInput} />
-          <Center mt='10px'>
-            <Button onClick={handleSubmit} colorScheme="green">
-              Generate
-            </Button>
-          </Center> */}
-              {error && <FormHelperText color="red">{error.message}</FormHelperText>}
-            </FormControl>
-          </Box>
-        </Center>
-        <Center w='100%'>
-          <Box maxW="xl">
-            <FormControl onSubmit={getPrompt} mt='100px'>
-              <RadioGroup onChange={setValue} value={value}>
-                <Stack color={"white"} direction='row'>
-                  <Radio value='Boomers'>Boomers</Radio>
-                  <Radio value='Millenials'>Millenials</Radio>
-                  <Radio value='GenZ'>GenZ</Radio>
-                </Stack>
-              </RadioGroup>
-              <RadioGroup mt='20px' onChange={setGeo} value={geo}>
-                <Stack color={"white"} direction='row'>
-                  <Radio value='Urban'>Urban</Radio>
-                  <Radio value='SubUrban'>SubUrban</Radio>
-                  <Radio value='Rural'>Rural</Radio>
-                </Stack>
-              </RadioGroup>
-              <Textarea color={"white"} mt='20px' onChange={handleInputChange} value={desc} placeholder='Describe your product in few words' />
-              <Center mt={'10px'}>
-                <Button onClick={getPrompt} bg='radial-gradient(circle, rgba(195,184,177,1) 0%, rgba(73,255,187,1) 18%, rgba(250,98,35,1) 55%, rgba(249,247,255,1) 85%, rgba(255,255,255,1) 100%);'>
-                  Generate
-                </Button>
-              </Center>
-            </FormControl>
-          </Box>
-        </Center>
-      </HStack>
+      {/* page title */}
+      <h1 className="text-3xl font-bold mt-2 mx-2 absolute top-5 left-5">ADGen</h1>
+
+      {/* page content */}
+      <div className="grid grid-cols-1 p-10 md:p-2 gap-5 md:grid-cols-2" >
+
+        <div className="w-full overflow-hidden">
+          <FormControl onSubmit={handleSubmit} mt="30px">
+
+            <div className="w-full">
+              {imageData ? (
+                <Image
+                  src={`data:image/jpeg;base64,${imageData}`}  // Update image source
+                  alt="Generated image"
+                />
+              ) : (
+
+                // placeholder Image
+                <Image
+                  className="w-[85%] mx-auto max-w-[100%]"
+                  src={placeHolderImage.src}
+                  alt="placeholder image"
+                />
+              )}
+            </div>
+
+            {error && <FormHelperText color="red">{error.message}</FormHelperText>}
+
+          </FormControl>
+        </div>
+
+
+        <div className="md:w-[60%] w-[75%] mx-auto p-5 flex justify-center items-center">
+
+          <FormControl onSubmit={getPrompt}>
+
+            <div>
+              <h3>
+                Please Choose the Category,
+              </h3>
+
+              <div className="my-5 p-2 flex flex-col gap-5">
+                <b className="underline underline-offset-2">Target Audience</b>
+                <div className="flex justify-evenly">
+                  {targetGeneration.map((generation, index) => {
+                    return <button className={`p-2 ${value === generation ? "text-[#f1f1f1] bg-[#222222]" : "bg-transparent text-[#222222]"} cursor-pointer mx-2 border-[#222222] border-2 border-opacity-50 rounded-md`} onClick={() => setValue(generation)}>{generation}</button>
+                  })}
+                </div>
+              </div>
+
+              <div className="my-5 p-2 flex flex-col gap-5">
+                <b className="underline underline-offset-2">Target Population</b>
+                <div className="flex justify-evenly">
+                  {targetPopulation.map((location, index) => {
+                    return <button className={`p-2 ${geo === location ? "text-[#f1f1f1] bg-[#222222]" : "bg-transparent text-[#222222]"} cursor-pointer mx-2 border-[#222222] border-2 border-opacity-50 rounded-md`} onClick={() => setGeo(location)}>{location}</button>
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <Textarea
+              className="w-full h-[10rem] border-2 border-[#222222] border-opacity-60 my-5"
+              onChange={handleInputChange} value={desc} placeholder='Describe your product in few words' 
+              />
+
+            <center>
+              <Button
+                className="my-5 bg-green-500 w-[80%] cursor-pointer hover:scale-98 transition-all"
+                onClick={getPrompt} >
+                Generate
+              </Button>
+            </center>
+
+          </FormControl>
+        </div>
+      </div>
     </div>
 
   );
